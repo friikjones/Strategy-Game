@@ -16,6 +16,8 @@ public class CameraControls : MonoBehaviour {
 	private float calculatedX;
 	private float centerZ;
 	private float calculatedZ;
+	private float centerY;
+	private float calculatedY;
 	
 	private KeyCode zoomIn;
 	private KeyCode zoomOut;
@@ -25,6 +27,8 @@ public class CameraControls : MonoBehaviour {
 	private KeyCode moveRight;
 	private KeyCode moveFront;
 	private KeyCode moveBack;
+	private KeyCode moveUp;
+	private KeyCode	moveDown;
 	
 	
 	// Use this for initialization
@@ -39,15 +43,18 @@ public class CameraControls : MonoBehaviour {
 		cameraZoomFieldVariable = 30;
 		cameraPanVariable = 2;
 		
-		
-		zoomIn = KeyCode.R;
-		zoomOut = KeyCode.F;
+		calculatedY = 10;
+
+		zoomIn = KeyCode.Z;
+		zoomOut = KeyCode.X;
 		rotateLeft = KeyCode.Q;
 		rotateRight = KeyCode.E;
 		moveLeft = KeyCode.A;
 		moveRight = KeyCode.D;
 		moveFront = KeyCode.W;
 		moveBack = KeyCode.S;
+		moveUp = KeyCode.R;
+		moveDown = KeyCode.F;
 	}
 	
 	// Update is called once per frame
@@ -63,7 +70,7 @@ public class CameraControls : MonoBehaviour {
 		calculatedX = Mathf.Sin(cameraAngle * Mathf.PI/180) * cameraRadius * -1 + centerX;
 		calculatedZ = Mathf.Cos(cameraAngle * Mathf.PI/180) * cameraRadius * -1 + centerZ;
 		
-		transform.position = new Vector3(calculatedX, 10, calculatedZ);
+		transform.position = new Vector3(calculatedX, calculatedY, calculatedZ);
 		transform.eulerAngles = new Vector3(45, cameraAngle, 0);
 		
 		Camera.main.fieldOfView = (cameraZoom * cameraZoomFieldVariable) + cameraZoomFieldBase;
@@ -85,12 +92,12 @@ public class CameraControls : MonoBehaviour {
 		
 		if (Input.GetKeyDown(rotateLeft))
 		{
-			cameraAngle = cameraAngle + 45;
+			cameraAngle = cameraAngle + 15;
 		}
 		
 		if (Input.GetKeyDown(rotateRight))
 		{
-			cameraAngle = cameraAngle - 45;
+			cameraAngle = cameraAngle - 15;
 		}
 		
 		if (Input.GetKeyDown(moveRight))
@@ -116,6 +123,15 @@ public class CameraControls : MonoBehaviour {
 			centerX = centerX - Mathf.Sin(cameraAngle * Mathf.PI/180) * cameraPanVariable;
 			centerZ = centerZ - Mathf.Cos(cameraAngle * Mathf.PI/180) * cameraPanVariable;
 		}
-		
+
+		if (Input.GetKeyDown (moveUp)) 
+		{
+			calculatedY = calculatedY + 5;
+		}
+
+		if (Input.GetKeyDown (moveDown)) 
+		{
+			calculatedY = calculatedY - 5;
+		}
 	}
 }
